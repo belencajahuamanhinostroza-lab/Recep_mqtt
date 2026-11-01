@@ -16,13 +16,13 @@ st.set_page_config(
 )
 
 # ==========================================
-# ESTILOS DE TODA LA APLICACIÓN
+# ESTILOS CSS
 # ==========================================
 
 st.markdown("""
 <style>
 
-/* Fondo completo de la aplicación */
+/* Fondo completo */
 .stApp {
     background: linear-gradient(
         135deg,
@@ -32,7 +32,6 @@ st.markdown("""
     );
 }
 
-/* Contenedor principal */
 [data-testid="stAppViewContainer"] {
     background: transparent;
 }
@@ -58,16 +57,23 @@ st.markdown("""
 }
 
 [data-testid="stSidebar"] * {
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
+/* Campos de la barra lateral */
 [data-testid="stSidebar"] input {
     background-color: #ffffff !important;
     color: #173e2b !important;
+    -webkit-text-fill-color: #173e2b !important;
 }
 
 [data-testid="stSidebar"] [data-baseweb="select"] {
-    color: #173e2b;
+    color: #173e2b !important;
+}
+
+/* Título Configuración MQTT */
+[data-testid="stSidebar"] h3 {
+    color: #ffffff !important;
 }
 
 /* Tipografía */
@@ -75,7 +81,7 @@ html, body, [class*="css"] {
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* Títulos */
+/* Títulos principales */
 h1 {
     color: #19452d !important;
     font-weight: 800 !important;
@@ -86,29 +92,39 @@ h2, h3 {
     font-weight: 700 !important;
 }
 
-/* Texto */
+/* Texto general */
 p, label {
     color: #385a43;
 }
 
-/* Botones */
+/* Botón principal */
 .stButton > button {
-    background: linear-gradient(90deg, #28633e, #3b8050);
-    color: white !important;
-    border: none;
+    background: linear-gradient(90deg, #28633e, #3b8050) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    border: none !important;
     border-radius: 12px;
     height: 48px;
     font-weight: 700;
     transition: 0.2s;
 }
 
-.stButton > button:hover {
-    background: #19452d;
-    border: none;
-    color: white !important;
+/* Texto interno del botón */
+.stButton > button p,
+.stButton > button span,
+.stButton > button div {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
 }
 
-/* Tarjetas de métricas */
+/* Hover del botón */
+.stButton > button:hover {
+    background: #19452d !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+/* Métricas */
 [data-testid="stMetric"] {
     background: #ffffff;
     border: 1px solid #d4e5d0;
@@ -132,13 +148,13 @@ p, label {
     border-radius: 13px;
 }
 
-/* Campos */
+/* Campos de texto */
 .stTextInput input,
 .stNumberInput input {
     border-radius: 9px;
 }
 
-/* Mensajes */
+/* Alertas */
 [data-testid="stAlert"] {
     border-radius: 12px;
 }
@@ -172,7 +188,7 @@ if "last_update" not in st.session_state:
 
 
 # ==========================================
-# FUNCIÓN MQTT
+# FUNCIÓN DE CONEXIÓN MQTT
 # ==========================================
 
 def get_mqtt_message(broker, port, topic, client_id):
@@ -236,7 +252,11 @@ def get_mqtt_message(broker, port, topic, client_id):
 with st.sidebar:
 
     st.title("🌱 AGROSMART")
-    st.markdown("### Configuración MQTT")
+
+    st.markdown(
+        "<h3 style='color: white !important;'>Configuración MQTT</h3>",
+        unsafe_allow_html=True
+    )
 
     st.write("Conecta tu sistema de sensores agrícolas.")
 
@@ -410,6 +430,7 @@ if st.session_state.sensor_data is not None:
             st.markdown("### 🌡️ Mediciones del sensor")
 
             if data:
+
                 columnas = st.columns(min(len(data), 3))
 
                 for i, (key, value) in enumerate(data.items()):
