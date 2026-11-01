@@ -5,160 +5,155 @@ import json
 import time
 
 # ==========================================
-# CONFIGURACIÓN DE LA APLICACIÓN
+# CONFIGURACIÓN
 # ==========================================
 
 st.set_page_config(
     page_title="AGROSMART",
     page_icon="🌱",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # ==========================================
-# ESTILOS CSS
+# ESTILOS DE TODA LA APLICACIÓN
 # ==========================================
 
 st.markdown("""
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-html, body, [class*="css"] {
-    font-family: 'Poppins', sans-serif;
-}
-
+/* Fondo completo de la aplicación */
 .stApp {
-    background: linear-gradient(135deg, #f3f7ef 0%, #e7f0e2 100%);
+    background: linear-gradient(
+        135deg,
+        #e8f1e4 0%,
+        #dcebd8 50%,
+        #cfe3ca 100%
+    );
 }
 
-.block-container {
+/* Contenedor principal */
+[data-testid="stAppViewContainer"] {
+    background: transparent;
+}
+
+[data-testid="stMain"] {
+    background: transparent;
+}
+
+[data-testid="stMainBlockContainer"] {
     padding-top: 2rem;
     padding-bottom: 3rem;
-    max-width: 1200px;
+    max-width: 1250px;
 }
 
+/* Barra lateral */
 [data-testid="stSidebar"] {
-    background: #173e2b;
+    background: linear-gradient(
+        180deg,
+        #153d29 0%,
+        #205638 55%,
+        #2d6843 100%
+    );
 }
 
 [data-testid="stSidebar"] * {
-    color: white !important;
+    color: #ffffff;
 }
 
 [data-testid="stSidebar"] input {
+    background-color: #ffffff !important;
     color: #173e2b !important;
-    background: white !important;
 }
 
-[data-testid="stSidebar"] label {
-    color: #e3f0e4 !important;
+[data-testid="stSidebar"] [data-baseweb="select"] {
+    color: #173e2b;
 }
 
-.hero {
-    background: linear-gradient(120deg, #17452e, #34734a);
-    padding: 42px 35px;
-    border-radius: 24px;
-    margin-bottom: 25px;
-    box-shadow: 0 8px 25px rgba(23, 62, 43, 0.15);
+/* Tipografía */
+html, body, [class*="css"] {
+    font-family: 'Segoe UI', sans-serif;
 }
 
-.hero-title {
-    color: white;
-    font-size: 46px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin: 0;
+/* Títulos */
+h1 {
+    color: #19452d !important;
+    font-weight: 800 !important;
 }
 
-.hero-title span {
-    color: #b9ed8d;
+h2, h3 {
+    color: #285b39 !important;
+    font-weight: 700 !important;
 }
 
-.hero-subtitle {
-    color: #c9e7bd;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 4px;
-    margin-top: 5px;
+/* Texto */
+p, label {
+    color: #385a43;
 }
 
-.hero-description {
-    color: #edf6e9;
-    font-size: 15px;
-    margin-top: 20px;
-    line-height: 1.7;
-}
-
-.section-title {
-    color: #214c32;
-    font-size: 23px;
-    font-weight: 700;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-.info-card {
-    background: white;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid #dce9d9;
-    box-shadow: 0 4px 15px rgba(25, 65, 40, 0.05);
-    margin-bottom: 15px;
-}
-
-.info-label {
-    color: #718477;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.info-value {
-    color: #214c32;
-    font-size: 25px;
-    font-weight: 700;
-    margin-top: 5px;
-}
-
-.info-icon {
-    font-size: 27px;
-}
-
+/* Botones */
 .stButton > button {
-    background: #34734a;
-    color: white;
+    background: linear-gradient(90deg, #28633e, #3b8050);
+    color: white !important;
     border: none;
     border-radius: 12px;
-    padding: 12px 20px;
-    font-weight: 600;
+    height: 48px;
+    font-weight: 700;
     transition: 0.2s;
 }
 
 .stButton > button:hover {
-    background: #245b38;
-    color: white;
+    background: #19452d;
     border: none;
+    color: white !important;
 }
 
-div[data-testid="stMetric"] {
-    background: white;
-    border: 1px solid #dce9d9;
+/* Tarjetas de métricas */
+[data-testid="stMetric"] {
+    background: #ffffff;
+    border: 1px solid #d4e5d0;
     border-radius: 16px;
     padding: 20px;
-    box-shadow: 0 4px 15px rgba(25, 65, 40, 0.05);
+    box-shadow: 0 5px 15px rgba(30, 70, 40, 0.08);
 }
 
-div[data-testid="stMetricLabel"] {
-    color: #718477;
+[data-testid="stMetricLabel"] {
+    color: #63816a !important;
 }
 
-div[data-testid="stMetricValue"] {
-    color: #214c32;
+[data-testid="stMetricValue"] {
+    color: #245b38 !important;
 }
 
-.stAlert {
+/* Expansores */
+[data-testid="stExpander"] {
+    background: rgba(255,255,255,0.75);
+    border: 1px solid #d3e3ce;
+    border-radius: 13px;
+}
+
+/* Campos */
+.stTextInput input,
+.stNumberInput input {
+    border-radius: 9px;
+}
+
+/* Mensajes */
+[data-testid="stAlert"] {
     border-radius: 12px;
+}
+
+/* Separadores */
+hr {
+    border-color: #c6dbc0;
+}
+
+/* Pie de página */
+.footer {
+    text-align: center;
+    color: #65816a;
+    font-size: 13px;
+    padding: 25px 0 10px 0;
 }
 
 </style>
@@ -177,7 +172,7 @@ if "last_update" not in st.session_state:
 
 
 # ==========================================
-# FUNCIÓN DE CONEXIÓN MQTT
+# FUNCIÓN MQTT
 # ==========================================
 
 def get_mqtt_message(broker, port, topic, client_id):
@@ -218,7 +213,9 @@ def get_mqtt_message(broker, port, topic, client_id):
         if message_received["received"]:
             return message_received["payload"]
 
-        return {"error": "No se recibieron datos dentro del tiempo de espera."}
+        return {
+            "error": "No se recibieron datos dentro del tiempo de espera."
+        }
 
     except Exception as e:
 
@@ -238,7 +235,7 @@ def get_mqtt_message(broker, port, topic, client_id):
 
 with st.sidebar:
 
-    st.markdown("## 🌱 AGROSMART")
+    st.title("🌱 AGROSMART")
     st.markdown("### Configuración MQTT")
 
     st.write("Conecta tu sistema de sensores agrícolas.")
@@ -295,48 +292,40 @@ with st.sidebar:
 
 
 # ==========================================
-# ENCABEZADO PRINCIPAL
+# ENCABEZADO
 # ==========================================
 
-st.markdown("""
-<div class="hero">
-    <div class="hero-title">
-        AGRO<span>SMART</span> 🌱
-    </div>
+st.title("🌱 AGROSMART")
 
-    <div class="hero-subtitle">
-        AGRICULTURA INTELIGENTE
-    </div>
+st.subheader("AGRICULTURA INTELIGENTE")
 
-    <div class="hero-description">
-        Monitorea las condiciones de tus cultivos y consulta
-        los datos de tus sensores desde un solo lugar.
-    </div>
-</div>
-""", unsafe_allow_html=True)
+st.write(
+    "Monitorea las condiciones de tus cultivos y consulta "
+    "los datos de tus sensores desde un solo lugar."
+)
+
+st.divider()
 
 
 # ==========================================
-# INFORMACIÓN GENERAL
+# INFORMACIÓN DE LA FINCA
 # ==========================================
+
+st.subheader("🌾 Información de tu finca")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown(f"""
-    <div class="info-card">
-        <div class="info-label">🌾 Finca registrada</div>
-        <div class="info-value">{finca}</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric(
+        label="Finca registrada",
+        value=finca
+    )
 
 with col2:
-    st.markdown(f"""
-    <div class="info-card">
-        <div class="info-label">🌱 Cultivo seleccionado</div>
-        <div class="info-value">{cultivo}</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric(
+        label="Cultivo seleccionado",
+        value=cultivo
+    )
 
 
 # ==========================================
@@ -349,10 +338,10 @@ with st.expander("ℹ️ ¿Cómo utilizar AGROSMART?"):
     1. Configura el broker MQTT en el menú lateral.
     2. Ingresa el puerto y el tópico de tu sensor.
     3. Escribe un identificador para el cliente.
-    4. Selecciona el botón **Obtener datos del sensor**.
-    5. Consulta las mediciones recibidas en el panel.
+    4. Presiona el botón **Obtener datos del sensor**.
+    5. Consulta las mediciones recibidas.
 
-    **Brokers públicos para realizar pruebas:**
+    **Brokers públicos para pruebas:**
 
     - broker.mqttdashboard.com
     - test.mosquitto.org
@@ -361,13 +350,12 @@ with st.expander("ℹ️ ¿Cómo utilizar AGROSMART?"):
 
 
 # ==========================================
-# BOTÓN PARA OBTENER DATOS
+# CONEXIÓN CON EL SENSOR
 # ==========================================
 
-st.markdown(
-    '<div class="section-title">📡 Conexión con los sensores</div>',
-    unsafe_allow_html=True
-)
+st.divider()
+
+st.subheader("📡 Conexión con los sensores")
 
 if st.button(
     "🔄 Obtener datos del sensor",
@@ -397,10 +385,7 @@ if st.session_state.sensor_data is not None:
 
     st.divider()
 
-    st.markdown(
-        '<div class="section-title">📊 Monitor de condiciones agrícolas</div>',
-        unsafe_allow_html=True
-    )
+    st.subheader("📊 Monitor de condiciones agrícolas")
 
     data = st.session_state.sensor_data
 
@@ -419,91 +404,84 @@ if st.session_state.sensor_data is not None:
 
         if isinstance(data, dict):
 
-            # Identificar temperatura y humedad para recomendaciones
             temperatura = None
             humedad = None
 
-            for key, value in data.items():
-
-                nombre = str(key).lower()
-
-                try:
-                    valor = float(value)
-
-                    if "temp" in nombre:
-                        temperatura = valor
-
-                    elif "hum" in nombre:
-                        humedad = valor
-
-                except (ValueError, TypeError):
-                    pass
-
-            # Mostrar todas las mediciones recibidas
             st.markdown("### 🌡️ Mediciones del sensor")
 
-            columnas = st.columns(min(len(data), 3))
+            if data:
+                columnas = st.columns(min(len(data), 3))
 
-            for i, (key, value) in enumerate(data.items()):
+                for i, (key, value) in enumerate(data.items()):
 
-                with columnas[i % len(columnas)]:
+                    with columnas[i % len(columnas)]:
 
-                    unidad = ""
+                        nombre = str(key).lower()
+                        unidad = ""
 
-                    nombre = str(key).lower()
+                        try:
+                            valor = float(value)
 
-                    if "temp" in nombre:
-                        unidad = " °C"
+                            if "temp" in nombre:
+                                unidad = " °C"
+                                temperatura = valor
 
-                    elif "hum" in nombre:
-                        unidad = " %"
+                            elif "hum" in nombre:
+                                unidad = " %"
+                                humedad = valor
 
-                    st.metric(
-                        label=str(key).replace("_", " ").title(),
-                        value=f"{value}{unidad}"
-                    )
+                        except (ValueError, TypeError):
+                            pass
 
-            # Recomendaciones básicas
-            st.markdown("### 🌿 Recomendaciones para el cultivo")
+                        st.metric(
+                            label=str(key).replace("_", " ").title(),
+                            value=f"{value}{unidad}"
+                        )
+
+            else:
+                st.info("El mensaje recibido no contiene mediciones.")
+
+            # Recomendaciones
+            st.markdown("### 🌿 Recomendaciones para tu cultivo")
 
             if temperatura is not None:
 
                 if temperatura < 15:
                     st.info(
-                        "❄️ **Temperatura baja:** "
-                        "Revisa si el cultivo necesita protección frente al frío."
+                        "❄️ Temperatura baja: revisa si el cultivo "
+                        "necesita protección frente al frío."
                     )
 
                 elif temperatura <= 30:
                     st.success(
-                        "🌱 **Temperatura moderada:** "
-                        "Las condiciones térmicas están dentro de un rango general moderado."
+                        "🌱 Temperatura moderada: las condiciones "
+                        "térmicas están dentro de un rango general moderado."
                     )
 
                 else:
                     st.warning(
-                        "☀️ **Temperatura elevada:** "
-                        "Verifica la ventilación y las necesidades de riego del cultivo."
+                        "☀️ Temperatura elevada: verifica la ventilación "
+                        "y las necesidades de riego."
                     )
 
             if humedad is not None:
 
                 if humedad < 40:
                     st.warning(
-                        "💧 **Humedad baja:** "
-                        "Comprueba la humedad del suelo y las necesidades de riego."
+                        "💧 Humedad baja: comprueba las condiciones "
+                        "de humedad y las necesidades de riego."
                     )
 
                 elif humedad <= 70:
                     st.success(
-                        "🌿 **Humedad moderada:** "
-                        "La humedad medida está dentro de un rango general moderado."
+                        "🌿 Humedad moderada: la medición está dentro "
+                        "de un rango general moderado."
                     )
 
                 else:
                     st.info(
-                        "💦 **Humedad elevada:** "
-                        "Revisa la ventilación y la posible acumulación de humedad."
+                        "💦 Humedad elevada: revisa la ventilación "
+                        "y la posible acumulación de humedad."
                     )
 
             with st.expander("📄 Ver información JSON completa"):
@@ -521,30 +499,24 @@ if st.session_state.sensor_data is not None:
 
 else:
 
-    st.markdown("""
-    <div class="info-card" style="text-align:center; padding:35px;">
-        <div style="font-size:45px;">🌱</div>
-        <h3 style="color:#214c32;">Esperando datos del sensor</h3>
-        <p style="color:#718477;">
-            Configura tu conexión MQTT y presiona el botón
-            para consultar las mediciones de tu cultivo.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.info(
+        "🌱 Esperando datos del sensor. "
+        "Configura tu conexión MQTT y presiona el botón "
+        "para consultar las mediciones de tu cultivo."
+    )
 
 
 # ==========================================
 # PIE DE PÁGINA
 # ==========================================
 
-st.markdown("""
-<br>
-<hr style="border:1px solid #dce9d9;">
-<p style="
-    text-align:center;
-    color:#718477;
-    font-size:12px;
-">
-    🌱 AGROSMART | Sistema de monitoreo agrícola inteligente
-</p>
-""", unsafe_allow_html=True)
+st.divider()
+
+st.markdown(
+    """
+    <div class="footer">
+        🌱 AGROSMART | Sistema de monitoreo agrícola inteligente
+    </div>
+    """,
+    unsafe_allow_html=True
+)
